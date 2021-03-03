@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">FirstProject</string>
+    <string name="textViewCount">0</string>
+    <string name="buttonCount">Count</string>
+    <string name="buttonToast">Toast</string>
+    <string name="buttonRandom">Random</string>
+    <string name="textViewInfo">Это случайноечисло между 0 и %1d</string>
+</resources>

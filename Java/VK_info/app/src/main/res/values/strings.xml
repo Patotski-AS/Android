@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">VK_info</string>
+    <string name="et_numberID">Введите ID</string>
+    <string name="button_find">Find</string>
+    <string name="tv_foundText">Найденные данные</string>
+    <string name="error_massage">Произошла ошибка, попробуйте еще раз!</string>
+</resources>

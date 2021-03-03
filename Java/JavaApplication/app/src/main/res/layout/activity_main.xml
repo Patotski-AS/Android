@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/text_quantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:padding="16dp"
+        android:text="@string/quantity"
+        android:textStyle="bold" />
+
+    <RelativeLayout
+        android:id="@+id/relativeQuantity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_quantity"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/button_minus"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:padding="8dp"
+            android:text="@string/button_minus" />
+
+        <TextView
+            android:id="@+id/quantity_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="6dp"
+            android:layout_toRightOf="@id/button_minus"
+            android:padding="8dp"
+            android:text="@string/quantity_text"
+            android:layout_toEndOf="@id/button_minus" />
+
+        <Button
+            android:id="@+id/button_plus"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_toEndOf="@id/quantity_text_view"
+            android:layout_toRightOf="@id/quantity_text_view"
+            android:padding="8dp"
+            android:text="@string/button_plus"
+            />
+    </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/textPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10sp"
+            android:layout_below="@id/relativeQuantity"
+            android:padding="8dp"
+            android:text="@string/text_price" />
+
+        <TextView
+            android:id="@+id/price_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="@string/text_numberOfPrice"
+            android:layout_below="@id/textPrice"
+            android:textAllCaps="false"
+            android:textColor="#000000" />
+
+    <Button
+        android:id="@+id/order_button_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/price_text_view"
+        android:onClick="click_order_button"
+        android:padding="16dp"
+        android:text="@string/button_order" />
+
+</RelativeLayout>
