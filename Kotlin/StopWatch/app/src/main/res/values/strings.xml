@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Stop Watch</string>
+    <string name="button_start">Пуск</string>
+    <string name="button_pause">Пауза</string>
+    <string name="button_reset">Сброс</string>
+    <string name="tv_timer_text">0:00:00</string>
+</resources>
