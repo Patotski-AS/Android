@@ -12,6 +12,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private var second = 0
     private var isRunning = false
+    private var wasRunning = false
 
     /**
      * onCreate - вызывается при создании активности.
@@ -24,6 +25,7 @@ class MainActivity : AppCompatActivity() {
         if (savedInstanceState!=null){
             second=savedInstanceState.getInt("second")
             isRunning=savedInstanceState.getBoolean("isRunning")
+            wasRunning=savedInstanceState.getBoolean("wasRunning")
         }
         runTimer()
     }
@@ -37,6 +39,23 @@ class MainActivity : AppCompatActivity() {
         super.onSaveInstanceState(outState)
         outState.putInt("second",second)
         outState.putBoolean("isRunning",isRunning)
+        outState.putBoolean("wasRunning",wasRunning)
+    }
+    /**
+     * onStop - вызывается, когда активность становится невидимой для пользователя
+     */
+    override fun onStop() {
+        super.onStop()
+        wasRunning=isRunning
+        isRunning=false
+    }
+
+    /**
+     * onStart - вызывается, когда активность становится видимой для пользователя
+     */
+    override fun onStart() {
+        super.onStart()
+        isRunning=wasRunning
     }
 
     fun clickButtonStart(view: View) {
