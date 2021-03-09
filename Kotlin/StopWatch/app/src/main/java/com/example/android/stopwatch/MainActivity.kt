@@ -33,7 +33,8 @@ class MainActivity : AppCompatActivity() {
     /**
      * onSaveInstanceState - вызывается при уничтожении активности, например при смене конфигурации, или повороте
      * экрана.
-     * Сохраняем в Bundle необходимые переменные.
+     * Позволяет сохранить свое состояние, перед уничтожением.
+     * Bundle - используется для восстановления данных
      */
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
@@ -42,19 +43,35 @@ class MainActivity : AppCompatActivity() {
         outState.putBoolean("wasRunning",wasRunning)
     }
     /**
-     * onStop - вызывается, когда активность становится невидимой для пользователя
-     */
-    override fun onStop() {
-        super.onStop()
-        wasRunning=isRunning
-        isRunning=false
-    }
-
-    /**
      * onStart - вызывается, когда активность становится видимой для пользователя
      */
-    override fun onStart() {
-        super.onStart()
+//    override fun onStart() {
+//        super.onStart()
+//        isRunning=wasRunning
+//    }
+
+    /**
+     * onStop - вызывается, когда активность становится невидимой для пользователя
+     */
+//    override fun onStop() {
+//        super.onStop()
+//        wasRunning=isRunning
+//        isRunning=false
+//    }
+
+//    override fun onRestart() {
+//        super.onRestart()
+//    }
+
+    override fun onPause() {
+        super.onPause()
+        wasRunning=isRunning
+        isRunning=false
+
+    }
+
+    override fun onResume() {
+        super.onResume()
         isRunning=wasRunning
     }
 
@@ -71,6 +88,9 @@ class MainActivity : AppCompatActivity() {
         second = 0
     }
 
+    /**
+     * объект Handler используются для планирования, или передачи кода другому потоку
+     */
     private fun runTimer() {
         val handler = Handler()
         handler.post(object : Runnable {
