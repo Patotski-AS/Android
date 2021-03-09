@@ -13,12 +13,30 @@ class MainActivity : AppCompatActivity() {
     private var second = 0
     private var isRunning = false
 
+    /**
+     * onCreate - вызывается при создании активности.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        if (savedInstanceState!=null){
+            second=savedInstanceState.getInt("second")
+            isRunning=savedInstanceState.getBoolean("isRunning")
+        }
         runTimer()
+    }
+
+    /**
+     * onSaveInstanceState - вызывается при уничтожении активности, например при смене конфигурации, или повороте
+     * экрана.
+     * Сохраняем в Bundle необходимые переменные.
+     */
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt("second",second)
+        outState.putBoolean("isRunning",isRunning)
     }
 
     fun clickButtonStart(view: View) {
