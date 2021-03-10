@@ -5,5 +5,27 @@
     <string name="hint_name">Введите ваше имя"</string>
     <string name="hint_password">Введите пароль:</string>
     <string name="button_create_order">Создать заказ</string>
-    <string name="warning_fill_fiels">Не все данные введены</string>
+    <string name="warning_fill_feels">Не все данные введены</string>
+    <string name="text_view_hello">Приветствую, %s ! Что желаете?</string>
+    <string name="tea">Чай</string>
+    <string name="coffee">Кофе</string>
+    <string name="text_view_additions">Что добавить в ваш %s?</string>
+    <string name="text_view_choose_drink">Выберите вид напитка</string>
+    <string name="check_box_sugar">Сахар</string>
+    <string name="check_box_milk">Молоко</string>
+    <string name="check_box_lemon">Лимон</string>
+    <string name="button_send_description">Кнопка отправить заказ</string>
+
+    <string-array name="options_of_tea">
+        <item>Черный</item>
+        <item>Зеленый</item>
+        <item>Фруктовый</item>
+    </string-array>
+
+    <string-array name="options_of_coffee">
+        <item>Латте</item>
+        <item>Американо</item>
+        <item>Капучино</item>
+    </string-array>
+
 </resources>

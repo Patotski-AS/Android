@@ -31,6 +31,6 @@ class LoginActivity : AppCompatActivity() {
             intent.putExtra("editTextPassword", binding.editTextPassword.text.toString().trim())
             startActivity(intent)
         }else
-            Toast.makeText(this,R.string.warning_fill_fiels,Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,R.string.warning_fill_feels,Toast.LENGTH_SHORT).show()
     }
 }
