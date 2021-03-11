@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Tools Shop</string>
+    <string name="description_logo">Логотип</string>
+    <string-array name="tools">
+        <item>Дрели</item>
+        <item>Перфараторы</item>
+        <item>Болгарки</item>
+    </string-array>
+</resources>
