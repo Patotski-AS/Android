@@ -59,10 +59,11 @@ class CreateOrderActivity : AppCompatActivity() {
         if (binding.checkBoxSugar.isChecked)
             stringAdditions.append(binding.checkBoxSugar.text.toString()).append(" ")
 
-        val optionOfDrink = if (drink == getString(R.string.tea).toLowerCase(Locale.ROOT))
-            binding.spinnerTea.selectedItem.toString()
-        else
-            binding.spinnerCoffee.selectedItem.toString()
+        val optionOfDrink = when (drink) {
+            getString(R.string.tea).toLowerCase(Locale.ROOT) -> binding.spinnerTea.selectedItem.toString()
+            getString(R.string.coffee).toLowerCase(Locale.ROOT) -> binding.spinnerCoffee.selectedItem.toString()
+            else -> ""
+        }
 
         val order = String.format(
             getString(R.string.order),
@@ -79,8 +80,8 @@ class CreateOrderActivity : AppCompatActivity() {
 
         val fullOrder = order + additions
 
-        val detailIntent = Intent(this,OrderDetailActivity::class.java)
-        detailIntent.putExtra("fullOrder",fullOrder)
+        val detailIntent = Intent(this, OrderDetailActivity::class.java)
+        detailIntent.putExtra("fullOrder", fullOrder)
         startActivity(detailIntent)
 
     }
