@@ -34,15 +34,15 @@ package com.example.android.toolsshop
 //
 //    }
 //}
+import android.content.Intent
 import android.os.Bundle
 import android.widget.AdapterView.OnItemClickListener
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.android.toolsshop.databinding.ActivityMainBinding
 
 
 class MainActivity : AppCompatActivity() {
-        private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,10 +68,16 @@ class MainActivity : AppCompatActivity() {
          * будет вид, предоставленный адаптером)
          * @param position Позиция представления в адаптере.
          * @param id Идентификатор строки элемента, по которому был выполнен щелчок.
+         * @param applicationContext основной контекст ( вместо this)
          */
-        binding.listViewTools.onItemClickListener = OnItemClickListener { parent, view, position, id ->
-            Toast.makeText(applicationContext,"Позиция: $position",Toast.LENGTH_SHORT).show()
-
-        }
+        binding.listViewTools.onItemClickListener =
+            OnItemClickListener { parent, view, position, id ->
+                when (position) {
+                    0 -> {
+                        intent = Intent(applicationContext, DrillCategoryActivity::class.java)
+                        startActivity(intent)
+                    }
+                }
+            }
     }
 }
