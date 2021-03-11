@@ -6,7 +6,7 @@
     <string name="hint_password">Введите пароль:</string>
     <string name="button_create_order">Создать заказ</string>
     <string name="warning_fill_feels">Не все данные введены</string>
-    <string name="text_view_hello">Приветствую, %s ! Что желаете?</string>
+    <string name="text_view_hello">Приветствую, %s ! Что будете заказывать?</string>
     <string name="tea">Чай</string>
     <string name="coffee">Кофе</string>
     <string name="text_view_additions">Что добавить в ваш %s?</string>
@@ -15,6 +15,8 @@
     <string name="check_box_milk">Молоко</string>
     <string name="check_box_lemon">Лимон</string>
     <string name="button_send_description">Кнопка отправить заказ</string>
+    <string name="order">Имя: %s\nПароль: %s\nНапиток: %s\nВид напитка: %s\n</string>
+    <string name="need_additions">Необходимые добавки: </string>
 
     <string-array name="options_of_tea">
         <item>Черный</item>
