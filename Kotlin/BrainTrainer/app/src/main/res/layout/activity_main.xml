@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/textViewOpinion0"
+        android:onClick="onClickAnswer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/_0"
+        android:background="@android:color/holo_blue_bright"
+        android:padding="@dimen/padding_tv_options"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/textSize_tv_options"
+        app:layout_constraintBottom_toTopOf="@+id/textViewOpinion2"
+        app:layout_constraintEnd_toStartOf="@id/textViewOpinion1"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewOpinion1"
+        android:onClick="onClickAnswer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/_0"
+        android:background="@android:color/holo_green_dark"
+        android:padding="@dimen/padding_tv_options"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/textSize_tv_options"
+        app:layout_constraintBottom_toTopOf="@+id/textViewOpinion3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/textViewOpinion0" />
+
+    <TextView
+        android:id="@+id/textViewOpinion2"
+        android:onClick="onClickAnswer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/_0"
+        android:background="@color/purple_700"
+        android:padding="@dimen/padding_tv_options"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/textSize_tv_options"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/textViewOpinion3"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewOpinion3"
+        android:onClick="onClickAnswer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/_0"
+        android:background="@android:color/holo_orange_light"
+        android:padding="@dimen/padding_tv_options"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/textSize_tv_options"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/textViewOpinion2" />
+
+    <TextView
+        android:id="@+id/textViewTimer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_0"
+        android:textSize="@dimen/textSize_tv_options"
+        android:gravity="center"
+        android:padding="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewShore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/teal_700"
+        android:text="@string/_0"
+        android:gravity="center"
+        android:padding="15dp"
+        android:textSize="@dimen/textSize_tv_options"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewAsk"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="@string/_0"
+        android:background="?attr/colorSurface"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="35sp"
+        app:layout_constraintBottom_toTopOf="@+id/textViewOpinion0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTimer" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Brain Trainer</string>
+    <string name="_0">0</string>
+    <string name="tv_shore_text">%s из %s</string>
+</resources>
