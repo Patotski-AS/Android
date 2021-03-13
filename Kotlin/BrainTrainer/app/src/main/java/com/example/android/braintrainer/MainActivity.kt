@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
 
         gameOver = false
 
-        val timer = object : CountDownTimer(6000, 1000) {
+        val timer = object : CountDownTimer(60000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 binding.textViewTimer.text = getTime(millisUntilFinished)
             }
