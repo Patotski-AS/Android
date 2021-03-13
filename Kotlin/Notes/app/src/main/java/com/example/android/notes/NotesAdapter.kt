@@ -6,14 +6,15 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class NotesAdapter(val notes:ArrayList<Note>) : RecyclerView.Adapter<NotesAdapter.NotesViewHolder>() {
+class NotesAdapter(val notes: ArrayList<Note>) :
+    RecyclerView.Adapter<NotesAdapter.NotesViewHolder>() {
 
 
     class NotesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-         val textViewTitle: TextView = itemView.findViewById(R.id.textViewTitle)
-         val textViewDescription: TextView = itemView.findViewById(R.id.textViewDescription)
-         val textViewDayOfWeek: TextView = itemView.findViewById(R.id.textViewDayOfWeek)
-         val textViewPriority: TextView = itemView.findViewById(R.id.textViewPriority)
+        val textViewTitle: TextView = itemView.findViewById(R.id.textViewTitle)
+        val textViewDescription: TextView = itemView.findViewById(R.id.textViewDescription)
+        val textViewDayOfWeek: TextView = itemView.findViewById(R.id.textViewDayOfWeek)
+//         val textViewPriority: TextView = itemView.findViewById(R.id.textViewPriority)
     }
 
     /**
@@ -42,7 +43,15 @@ class NotesAdapter(val notes:ArrayList<Note>) : RecyclerView.Adapter<NotesAdapte
         holder.textViewTitle.text = note.title
         holder.textViewDescription.text = note.description
         holder.textViewDayOfWeek.text = note.dayOfWeek
-        holder.textViewPriority.text = note.priority.toString()
+//        holder.textViewPriority.text = note.priority.toString()
+
+       val colorID = when (note.priority) {
+            1 -> holder.itemView.resources.getColor(android.R.color.holo_red_light)
+            2 -> holder.itemView.resources.getColor(android.R.color.holo_orange_light)
+            3 -> holder.itemView.resources.getColor(android.R.color.holo_green_light)
+            else -> holder.itemView.resources.getColor(android.R.color.darker_gray)
+        }
+        holder.textViewTitle.setBackgroundColor(colorID)
     }
 
     /**
@@ -51,6 +60,6 @@ class NotesAdapter(val notes:ArrayList<Note>) : RecyclerView.Adapter<NotesAdapte
      * @return Общее количество элементов в этом адаптере.
      */
     override fun getItemCount(): Int {
-        return  notes.size
+        return notes.size
     }
 }
