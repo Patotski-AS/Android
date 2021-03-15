@@ -2,10 +2,12 @@
 ===============================
 
 
-BrainTrainer/
-Сохранение данных приложения используя SharedPreferences
+BrainTrainer
+* Сохранение данных приложения используя SharedPreferences
+* 
 ******************************************************
-* Notes/
+
+ Notes
 * RecyclerView 
 * ViewHolder
 * CardView 
