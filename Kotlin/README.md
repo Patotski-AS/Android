@@ -9,6 +9,11 @@ BrainTrainer
 
  Notes
 * RecyclerView 
+* Adapter
 * ViewHolder
-* CardView 
+* ItemTouchHelper - свайпы
+* setOnClickListener - клик
+* setOnLongClickListener - долгий клик 
+
 * FloatingActionButton
+* CardView 
