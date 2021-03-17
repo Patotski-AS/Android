@@ -2,11 +2,13 @@
 ===============================
 
 
-BrainTrainer/
-Сохранение данных приложения используя SharedPreferences
-==========================================================================================
-Notes/
-RecyclerView 
-ViewHolder
-CardView 
-FloatingActionButton
+BrainTrainer
+* Сохранение данных приложения используя SharedPreferences
+* 
+******************************************************
+
+ Notes
+* RecyclerView 
+* ViewHolder
+* CardView 
+* FloatingActionButton
