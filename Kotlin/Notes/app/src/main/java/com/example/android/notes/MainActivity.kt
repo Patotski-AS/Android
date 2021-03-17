@@ -3,8 +3,8 @@ package com.example.android.notes
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android.notes.databinding.ActivityMainBinding
 
@@ -15,7 +15,6 @@ class MainActivity : AppCompatActivity() {
     companion object {
         var notes = arrayListOf<Note>()
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,8 +35,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        val adapter = NotesAdapter(notes)
-
         /**
          * @param LinearLayoutManager(this) Создает вертикальный LinearLayout
          * @param LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false) Создает горизонтальный LinearLayout
@@ -45,6 +42,12 @@ class MainActivity : AppCompatActivity() {
          *
          */
         binding.recyclerViewNotes.layoutManager = LinearLayoutManager(this)
+        val adapter=NotesAdapter(notes, object : NotesAdapter.ClickNodeListener{
+            override fun onNodeClick(position: Int) {
+                Toast.makeText(applicationContext, "clicked", Toast.LENGTH_SHORT).show();
+            }
+
+        })
         binding.recyclerViewNotes.adapter = adapter
 
     }
