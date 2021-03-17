@@ -9,27 +9,35 @@ import androidx.recyclerview.widget.RecyclerView
 
 
 class NotesAdapter(
-    private val notes: ArrayList<Note>,
-    private val clickNodeListener:ClickNodeListener
-    ) :
+    private val notes: ArrayList<Note>
+) :
     RecyclerView.Adapter<NotesAdapter.NotesViewHolder>() {
+    var clickNodeListener: ClickNodeListener? = null
 
 
-     interface ClickNodeListener{
-        fun onNodeClick(position:Int)
-     }
+    interface ClickNodeListener {
+        fun onNodeClick(position: Int)
+        fun onNodeLongClick(position: Int)
+    }
 
-  inner  class NotesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class NotesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val textViewTitle: TextView = itemView.findViewById(R.id.textViewTitle)
         val textViewDescription: TextView = itemView.findViewById(R.id.textViewDescription)
         val textViewDayOfWeek: TextView = itemView.findViewById(R.id.textViewDayOfWeek)
 
         init {
+            if (clickNodeListener != null) {
                 itemView.setOnClickListener(View.OnClickListener {
-                    clickNodeListener.onNodeClick(adapterPosition)
+                    clickNodeListener?.onNodeClick(adapterPosition)
                 })
+                itemView.setOnLongClickListener(View.OnLongClickListener {
+                    clickNodeListener?.onNodeLongClick(adapterPosition)
+                    true
+                })
+            }
         }
     }
+
     /**
      * Вызывается, когда RecyclerView требуется новый ViewHolder заданного типа для представления
      *  @param parent Группа ViewGroup, в которую будет добавлен новый View после привязки к
@@ -45,14 +53,6 @@ class NotesAdapter(
         viewType: Int
     ): NotesAdapter.NotesViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.note_item, parent, false)
-        //        val position = viewHolder.adapterPosition
-//        if (position != RecyclerView.NO_POSITION) {
-//            viewHolder.constraintLayout.setOnClickListener(View.OnClickListener {
-//                Toast.makeText(parent.context, viewHolder.adapterPosition, Toast.LENGTH_SHORT)
-//                    .show()
-//                Log.i("qwerty", viewHolder.adapterPosition.toString())
-//            })
-//        }
         return NotesViewHolder(view)
     }
 

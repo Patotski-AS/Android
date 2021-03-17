@@ -5,12 +5,16 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.android.notes.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var adapter: NotesAdapter
+    private lateinit var itemTouchHelper: ItemTouchHelper
 
     companion object {
         var notes = arrayListOf<Note>()
@@ -42,15 +46,48 @@ class MainActivity : AppCompatActivity() {
          *
          */
         binding.recyclerViewNotes.layoutManager = LinearLayoutManager(this)
-        val adapter=NotesAdapter(notes, object : NotesAdapter.ClickNodeListener{
-            override fun onNodeClick(position: Int) {
-                Toast.makeText(applicationContext, "clicked", Toast.LENGTH_SHORT).show();
-            }
-
-        })
+        adapter = NotesAdapter(notes)
         binding.recyclerViewNotes.adapter = adapter
 
+        adapter.clickNodeListener =
+            object : NotesAdapter.ClickNodeListener {
+                override fun onNodeClick(position: Int) {
+                    Toast.makeText(applicationContext, "checked", Toast.LENGTH_SHORT).show()
+                }
+                override fun onNodeLongClick(position: Int) {
+                    removeNote(position)
+                }
+            }
+
+        /**
+         * ItemTouchHelper - класс для создания свайпов
+         * itemTouchHelper.attachToRecyclerView(binding.recyclerViewNotes) - применить
+         */
+        itemTouchHelper = ItemTouchHelper( object : ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT){
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                TODO("Not yet implemented")
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                removeNote(viewHolder.adapterPosition)
+            }
+        })
+        itemTouchHelper.attachToRecyclerView(binding.recyclerViewNotes)
+
     }
+
+    /**
+     * @param adapter.notifyDataSetChanged() - обновление RecyclerView
+     */
+    fun removeNote(position: Int) {
+        notes.removeAt(position)
+        adapter.notifyDataSetChanged()
+    }
+
 
     fun onClickAddNote(view: View) {
         intent = Intent(this, NoteAddActivity::class.java)
