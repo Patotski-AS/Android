@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.content.Intent
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
+import android.provider.BaseColumns
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -18,7 +19,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var adapter: NotesAdapter
     private lateinit var itemTouchHelper: ItemTouchHelper
     private lateinit var dbHelper: NotesDBHelper
-    private lateinit var notes:ArrayList<Note>
+    private lateinit var notes: ArrayList<Note>
     private lateinit var database: SQLiteDatabase
 
 
@@ -36,15 +37,16 @@ class MainActivity : AppCompatActivity() {
          * writableDatabase - для записи
          * readableDatabase - для чтения
          */
-         database = dbHelper.writableDatabase
+        database = dbHelper.writableDatabase
 
         /**
          * Очищаем базу данных
          */
 //        database.delete(NotesContract.NotesEntry.TABLE_NAME, null, null)
 
-//        writeDB(database )
-         notes = readDB()
+        notes = ArrayList()
+//        writeDB()
+        readDB()
 
 
         /**
@@ -59,7 +61,11 @@ class MainActivity : AppCompatActivity() {
         adapter.clickNodeListener =
             object : NotesAdapter.ClickNodeListener {
                 override fun onNodeClick(position: Int) {
-                    Toast.makeText(applicationContext, "checked", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        applicationContext,
+                        "ceck $position",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
 
                 override fun onNodeLongClick(position: Int) {
@@ -92,25 +98,25 @@ class MainActivity : AppCompatActivity() {
     /**
      * Чтение из БД в массив
      * cursor - объект для чтения из БД
-     * cursor.close() - закрываем курсор
+     * close() - закрываем курсор
      * */
-    private fun readDB(): ArrayList<Note> {
-        val notesFromDB: ArrayList<Note> = ArrayList()
+    private fun readDB() {
+        notes.clear()
         val cursor =
             database.query(NotesContract.NotesEntry.TABLE_NAME, null, null, null, null, null, null)
-        while (cursor.moveToNext()) {
-            val title =
-                cursor.getString(cursor.getColumnIndex(NotesContract.NotesEntry.COLUMN_TITLE))
-            val description =
-                cursor.getString(cursor.getColumnIndex(NotesContract.NotesEntry.COLUMN_DESCRIPTION))
-            val dayOfWeek =
-                cursor.getString(cursor.getColumnIndex(NotesContract.NotesEntry.COLUMN_DAY_OF_WEEK))
-            val priority =
-                cursor.getInt(cursor.getColumnIndex(NotesContract.NotesEntry.COLUMN_PRIORITY))
-            notesFromDB.add(Note(title, description, dayOfWeek, priority))
+        with(cursor) {
+            while (moveToNext()) {
+                val id = getInt(getColumnIndexOrThrow(BaseColumns._ID))
+                val title = getString(getColumnIndex(NotesContract.NotesEntry.COLUMN_TITLE))
+                val description =
+                    getString(getColumnIndex(NotesContract.NotesEntry.COLUMN_DESCRIPTION))
+                val dayOfWeek =
+                    getString(getColumnIndex(NotesContract.NotesEntry.COLUMN_DAY_OF_WEEK))
+                val priority = getInt(getColumnIndex(NotesContract.NotesEntry.COLUMN_PRIORITY))
+                notes.add(Note(id, title, description, dayOfWeek, priority))
+            }
+            close()
         }
-        cursor.close()
-        return notesFromDB
     }
 
     /**
@@ -119,34 +125,29 @@ class MainActivity : AppCompatActivity() {
      * insert - данных в БД из ContentValues
      */
     private fun writeDB() {
-        if (notes.isEmpty()) {
-            with(notes) {
-                add(Note("Парикмахер", "Сделать прическу", "Понедельник", 2))
-                add(Note("Баскетбол", "Игра со школьной командой", "Вторник", 3))
-                add(Note("Магазин", "Купить новые джинсы", "Понедельник", 3))
-                add(Note("Стоматолог", "Вылечить зубы", "Понедельник", 2))
-                add(Note("Парикмахер", "Сделать прическу к выпускному", "Среда", 1))
-                add(Note("Баскетбол", "Игра со школьной командой", "Вторник", 3))
-                add(Note("Магазин", "Купить новые джинсы", "Понедельник", 3))
-            }
-        }
 
         for (note in notes) {
-            val contentValues = ContentValues()
-            contentValues.put(NotesContract.NotesEntry.COLUMN_TITLE, note.title)
-            contentValues.put(NotesContract.NotesEntry.COLUMN_DESCRIPTION, note.description)
-            contentValues.put(NotesContract.NotesEntry.COLUMN_DAY_OF_WEEK, note.dayOfWeek)
-            contentValues.put(NotesContract.NotesEntry.COLUMN_PRIORITY, note.priority)
+            val contentValues = ContentValues().apply {
+                put(NotesContract.NotesEntry.COLUMN_TITLE, note.title)
+                put(NotesContract.NotesEntry.COLUMN_DESCRIPTION, note.description)
+                put(NotesContract.NotesEntry.COLUMN_DAY_OF_WEEK, note.dayOfWeek)
+                put(NotesContract.NotesEntry.COLUMN_PRIORITY, note.priority)
+            }
             database.insert(NotesContract.NotesEntry.TABLE_NAME, null, contentValues)
         }
 
     }
 
     /**
+     * Удаление Заметки
      * @param adapter.notifyDataSetChanged() - обновление RecyclerView
      */
     fun removeNote(position: Int) {
-        notes.removeAt(position)
+        val id = notes[position].id
+        val where = "${BaseColumns._ID} LIKE ?"
+        val whereArgs = arrayOf(id.toString())
+        database.delete(NotesContract.NotesEntry.TABLE_NAME, where, whereArgs)
+        readDB()
         adapter.notifyDataSetChanged()
     }
 
@@ -155,4 +156,5 @@ class MainActivity : AppCompatActivity() {
         intent = Intent(this, NoteAddActivity::class.java)
         startActivity(intent)
     }
+
 }

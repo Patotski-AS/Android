@@ -14,7 +14,7 @@ class NotesDBHelper(context: Context?) : SQLiteOpenHelper(context, DB_NAME, null
 
     companion object {
         const val DB_NAME = "notes.db"
-        const val DB_VERSION = 1
+        const val DB_VERSION = 2
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
