@@ -2,6 +2,7 @@ package com.example.android.notes
 
 import android.content.ContentValues
 import android.content.Intent
+import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -17,10 +18,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var adapter: NotesAdapter
     private lateinit var itemTouchHelper: ItemTouchHelper
     private lateinit var dbHelper: NotesDBHelper
+    private lateinit var notes:ArrayList<Note>
+    private lateinit var database: SQLiteDatabase
 
-    companion object {
-        var notes = arrayListOf<Note>()
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,56 +30,23 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         dbHelper = NotesDBHelper(this)
 
+
         /**
          * Получаем базу данных
          * writableDatabase - для записи
-         * readableDatabase - для записи
+         * readableDatabase - для чтения
          */
-        val database = dbHelper.writableDatabase
-
-
-//        if (notes.isEmpty()) {
-//            with(notes) {
-//                add(Note("Парикмахер", "Сделать прическу", "Понедельник", 2))
-//                add(Note("Баскетбол", "Игра со школьной командой", "Вторник", 3))
-//                add(Note("Магазин", "Купить новые джинсы", "Понедельник", 3))
-//                add(Note("Стоматолог", "Вылечить зубы", "Понедельник", 2))
-//                add(Note("Парикмахер", "Сделать прическу к выпускному", "Среда", 1))
-//                add(Note("Баскетбол", "Игра со школьной командой", "Вторник", 3))
-//                add(Note("Магазин", "Купить новые джинсы", "Понедельник", 3))
-//            }
-//        }
-//
-//        /**
-//         * Вставка данных в БД из массива
-//         * class ContentValues() - служит для хранения данных (ключ-значение)
-//         * insert - данных в БД из ContentValues
-//         */
-//        for (note in notes) {
-//            val contentValues = ContentValues()
-//            contentValues.put(NotesContract.NotesEntry.COLUMN_TITLE, note.title)
-//            contentValues.put(NotesContract.NotesEntry.COLUMN_DESCRIPTION, note.description)
-//            contentValues.put(NotesContract.NotesEntry.COLUMN_DAY_OF_WEEK, note.dayOfWeek)
-//            contentValues.put(NotesContract.NotesEntry.COLUMN_PRIORITY, note.priority)
-//            database.insert(NotesContract.NotesEntry.TABLE_NAME, null, contentValues)
-//        }
+         database = dbHelper.writableDatabase
 
         /**
-         * Чтение из БД в массив
-         * cursor - объект для чтения из БД
-         * cursor.close() - закрываем курсор
-         * */
-        val notesFromDB: ArrayList<Note> = ArrayList()
-        val cursor =
-            database.query(NotesContract.NotesEntry.TABLE_NAME, null, null, null, null, null, null)
-        while (cursor.moveToNext()){
-            val title = cursor.getString(cursor.getColumnIndex(NotesContract.NotesEntry.COLUMN_TITLE))
-            val description = cursor.getString(cursor.getColumnIndex(NotesContract.NotesEntry.COLUMN_DESCRIPTION))
-            val dayOfWeek = cursor.getString(cursor.getColumnIndex(NotesContract.NotesEntry.COLUMN_DAY_OF_WEEK))
-            val priority = cursor.getInt(cursor.getColumnIndex(NotesContract.NotesEntry.COLUMN_PRIORITY))
-            notesFromDB.add(Note(title, description, dayOfWeek, priority))
-        }
-        cursor.close()
+         * Очищаем базу данных
+         */
+//        database.delete(NotesContract.NotesEntry.TABLE_NAME, null, null)
+
+//        writeDB(database )
+         notes = readDB()
+
+
         /**
          * Создание RecyclerView
          * @param LinearLayoutManager(this) Создает вертикальный LinearLayout
@@ -87,7 +54,7 @@ class MainActivity : AppCompatActivity() {
          * @param GridLayoutManager(this,3(количество столбцов)) Создает  LinearLayout сеткой
          */
         binding.recyclerViewNotes.layoutManager = LinearLayoutManager(this)
-        adapter = NotesAdapter(notesFromDB)
+        adapter = NotesAdapter(notes)
         binding.recyclerViewNotes.adapter = adapter
         adapter.clickNodeListener =
             object : NotesAdapter.ClickNodeListener {
@@ -120,6 +87,58 @@ class MainActivity : AppCompatActivity() {
         })
         itemTouchHelper.attachToRecyclerView(binding.recyclerViewNotes)
 
+    }
+
+    /**
+     * Чтение из БД в массив
+     * cursor - объект для чтения из БД
+     * cursor.close() - закрываем курсор
+     * */
+    private fun readDB(): ArrayList<Note> {
+        val notesFromDB: ArrayList<Note> = ArrayList()
+        val cursor =
+            database.query(NotesContract.NotesEntry.TABLE_NAME, null, null, null, null, null, null)
+        while (cursor.moveToNext()) {
+            val title =
+                cursor.getString(cursor.getColumnIndex(NotesContract.NotesEntry.COLUMN_TITLE))
+            val description =
+                cursor.getString(cursor.getColumnIndex(NotesContract.NotesEntry.COLUMN_DESCRIPTION))
+            val dayOfWeek =
+                cursor.getString(cursor.getColumnIndex(NotesContract.NotesEntry.COLUMN_DAY_OF_WEEK))
+            val priority =
+                cursor.getInt(cursor.getColumnIndex(NotesContract.NotesEntry.COLUMN_PRIORITY))
+            notesFromDB.add(Note(title, description, dayOfWeek, priority))
+        }
+        cursor.close()
+        return notesFromDB
+    }
+
+    /**
+     * Вставка данных в БД из массива
+     * class ContentValues() - служит для хранения данных (ключ-значение)
+     * insert - данных в БД из ContentValues
+     */
+    private fun writeDB() {
+        if (notes.isEmpty()) {
+            with(notes) {
+                add(Note("Парикмахер", "Сделать прическу", "Понедельник", 2))
+                add(Note("Баскетбол", "Игра со школьной командой", "Вторник", 3))
+                add(Note("Магазин", "Купить новые джинсы", "Понедельник", 3))
+                add(Note("Стоматолог", "Вылечить зубы", "Понедельник", 2))
+                add(Note("Парикмахер", "Сделать прическу к выпускному", "Среда", 1))
+                add(Note("Баскетбол", "Игра со школьной командой", "Вторник", 3))
+                add(Note("Магазин", "Купить новые джинсы", "Понедельник", 3))
+            }
+        }
+
+        for (note in notes) {
+            val contentValues = ContentValues()
+            contentValues.put(NotesContract.NotesEntry.COLUMN_TITLE, note.title)
+            contentValues.put(NotesContract.NotesEntry.COLUMN_DESCRIPTION, note.description)
+            contentValues.put(NotesContract.NotesEntry.COLUMN_DAY_OF_WEEK, note.dayOfWeek)
+            contentValues.put(NotesContract.NotesEntry.COLUMN_PRIORITY, note.priority)
+            database.insert(NotesContract.NotesEntry.TABLE_NAME, null, contentValues)
+        }
 
     }
 
