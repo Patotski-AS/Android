@@ -14,7 +14,7 @@ BrainTrainer
 
 ******************************************************
 
- Notes https://github.com/Patotski-AS/Android/tree/main/Kotlin/Notes
+ Notes 
 * RecyclerView 
 	* Adapter
 	* ViewHolder
