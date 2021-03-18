@@ -22,5 +22,11 @@ BrainTrainer
 	* setOnClickListener - клик
 	* setOnLongClickListener - долгий клик 
 
+* SQL
+	* Contract - класс с константами для общения с БД
+	* DBHelper
+	* запись в БД с помощью class ContentValues() - служит для хранения данных (ключ-значение)
+	* чтение из БД с помощью cursor - объект для чтения из БД
+
 * FloatingActionButton
 * CardView 
