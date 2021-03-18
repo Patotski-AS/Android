@@ -14,7 +14,7 @@ BrainTrainer
 
 ******************************************************
 
- Notes
+ Notes 
 * RecyclerView 
 	* Adapter
 	* ViewHolder
