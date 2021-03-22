@@ -18,9 +18,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: NotesAdapter
     private lateinit var itemTouchHelper: ItemTouchHelper
-    private lateinit var dbHelper: NotesDBHelper
     private lateinit var notes: ArrayList<Note>
-    private lateinit var database: SQLiteDatabase
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,25 +27,8 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        dbHelper = NotesDBHelper(this)
-
-
-        /**
-         * Получаем базу данных
-         * writableDatabase - для записи
-         * readableDatabase - для чтения
-         */
-        database = dbHelper.writableDatabase
-
-        /**
-         * Очищаем базу данных
-         */
-//        database.delete(NotesContract.NotesEntry.TABLE_NAME, null, null)
 
         notes = ArrayList()
-//        writeDB()
-        readDB()
-
 
         /**
          * Создание RecyclerView
@@ -96,61 +77,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
-     * Чтение из БД в массив
-     * cursor - объект для чтения из БД
-     * close() - закрываем курсор
-     * */
-    private fun readDB() {
-        notes.clear()
-        val cursor =
-            database.query(NotesContract.NotesEntry.TABLE_NAME, null, null, null, null, null, null)
-        with(cursor) {
-            while (moveToNext()) {
-                val id = getInt(getColumnIndexOrThrow(BaseColumns._ID))
-                val title = getString(getColumnIndex(NotesContract.NotesEntry.COLUMN_TITLE))
-                val description =
-                    getString(getColumnIndex(NotesContract.NotesEntry.COLUMN_DESCRIPTION))
-                val dayOfWeek =
-                    getString(getColumnIndex(NotesContract.NotesEntry.COLUMN_DAY_OF_WEEK))
-                val priority = getInt(getColumnIndex(NotesContract.NotesEntry.COLUMN_PRIORITY))
-                notes.add(Note(id, title, description, dayOfWeek, priority))
-            }
-            close()
-        }
-    }
-
-    /**
-     * Вставка данных в БД из массива
-     * class ContentValues() - служит для хранения данных (ключ-значение)
-     * insert - данных в БД из ContentValues
-     */
-    private fun writeDB() {
-
-        for (note in notes) {
-            val contentValues = ContentValues().apply {
-                put(NotesContract.NotesEntry.COLUMN_TITLE, note.title)
-                put(NotesContract.NotesEntry.COLUMN_DESCRIPTION, note.description)
-                put(NotesContract.NotesEntry.COLUMN_DAY_OF_WEEK, note.dayOfWeek)
-                put(NotesContract.NotesEntry.COLUMN_PRIORITY, note.priority)
-            }
-            database.insert(NotesContract.NotesEntry.TABLE_NAME, null, contentValues)
-        }
-
-    }
-
-    /**
      * Удаление Заметки
      * @param adapter.notifyDataSetChanged() - обновление RecyclerView
      */
     fun removeNote(position: Int) {
-        val id = notes[position].id
-        val where = "${BaseColumns._ID} LIKE ?"
-        val whereArgs = arrayOf(id.toString())
-        database.delete(NotesContract.NotesEntry.TABLE_NAME, where, whereArgs)
-        readDB()
         adapter.notifyDataSetChanged()
     }
-
 
     fun onClickAddNote(view: View) {
         intent = Intent(this, NoteAddActivity::class.java)

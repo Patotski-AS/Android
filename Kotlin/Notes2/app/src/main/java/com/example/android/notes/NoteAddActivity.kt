@@ -13,8 +13,6 @@ import com.example.android.notes.databinding.ActivityNoteAddBinding
 
 class NoteAddActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNoteAddBinding
-    private lateinit var dbHelper: NotesDBHelper
-    private lateinit var database: SQLiteDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,8 +21,6 @@ class NoteAddActivity : AppCompatActivity() {
         binding = ActivityNoteAddBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        dbHelper = NotesDBHelper(this)
-        database = dbHelper.readableDatabase
 
 
     }
@@ -37,7 +33,7 @@ class NoteAddActivity : AppCompatActivity() {
 
         val title = binding.editTextTextTitle.text.toString().trim()
         val description = binding.editTextDescription.text.toString().trim()
-        val dayOfWeek = binding.spinner?.selectedItem.toString()
+        val dayOfWeek = binding.spinner?.selectedItemPosition
         val priority = checkButton()
 
         if (isFilled(title, description)) {
@@ -45,7 +41,6 @@ class NoteAddActivity : AppCompatActivity() {
             contentValues.put(NotesContract.NotesEntry.COLUMN_DESCRIPTION, description)
             contentValues.put(NotesContract.NotesEntry.COLUMN_DAY_OF_WEEK, dayOfWeek)
             contentValues.put(NotesContract.NotesEntry.COLUMN_PRIORITY, priority)
-            database.insert(NotesContract.NotesEntry.TABLE_NAME, null, contentValues)
             intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         } else {

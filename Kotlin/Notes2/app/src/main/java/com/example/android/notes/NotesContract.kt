@@ -24,7 +24,7 @@ object NotesContract {
                 "${BaseColumns._ID} $TYPE_INTEGER PRIMARY KEY, " +
                 "$COLUMN_TITLE $TYPE_TEXT, " +
                 "$COLUMN_DESCRIPTION $TYPE_TEXT, " +
-                "$COLUMN_DAY_OF_WEEK $TYPE_TEXT, " +
+                "$COLUMN_DAY_OF_WEEK $TYPE_INTEGER, " +
                 "$COLUMN_PRIORITY $TYPE_INTEGER)"
 
         /**

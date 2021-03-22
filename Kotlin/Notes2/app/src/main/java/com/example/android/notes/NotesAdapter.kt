@@ -68,7 +68,7 @@ class NotesAdapter(
         val note = notes[holder.adapterPosition]
         holder.textViewTitle.text = note.title
         holder.textViewDescription.text = note.description
-        holder.textViewDayOfWeek.text = note.dayOfWeek
+        holder.textViewDayOfWeek.text = note.getDayAsString(note.dayOfWeek)
 //        holder.textViewPriority.text = note.priority.toString()
         val colorID = when (note.priority) {
             1 -> holder.itemView.resources.getColor(android.R.color.holo_red_light)
