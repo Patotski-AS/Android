@@ -13,6 +13,7 @@ import com.example.android.notes.databinding.ActivityNoteAddBinding
 
 class NoteAddActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNoteAddBinding
+    private lateinit var database: NotesDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,7 +22,7 @@ class NoteAddActivity : AppCompatActivity() {
         binding = ActivityNoteAddBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
+        database = NotesDatabase.getInstance(this)
 
     }
 
@@ -37,12 +38,11 @@ class NoteAddActivity : AppCompatActivity() {
         val priority = checkButton()
 
         if (isFilled(title, description)) {
-            contentValues.put(NotesContract.NotesEntry.COLUMN_TITLE, title)
-            contentValues.put(NotesContract.NotesEntry.COLUMN_DESCRIPTION, description)
-            contentValues.put(NotesContract.NotesEntry.COLUMN_DAY_OF_WEEK, dayOfWeek)
-            contentValues.put(NotesContract.NotesEntry.COLUMN_PRIORITY, priority)
-            intent = Intent(this, MainActivity::class.java)
+            val note = Note(title,description, dayOfWeek!!,priority)
+            database.notesDAO().insertNote(note)
+            intent = Intent(this,MainActivity::class.java)
             startActivity(intent)
+
         } else {
             Toast.makeText(this, getString(R.string.warning_fill_fileds), Toast.LENGTH_SHORT).show()
         }

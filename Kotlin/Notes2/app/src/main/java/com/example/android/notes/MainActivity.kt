@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var adapter: NotesAdapter
     private lateinit var itemTouchHelper: ItemTouchHelper
     private lateinit var notes: ArrayList<Note>
+    private lateinit var database: NotesDatabase
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,6 +28,8 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        database = NotesDatabase.getInstance(this)
 
         notes = ArrayList()
 
@@ -38,6 +41,7 @@ class MainActivity : AppCompatActivity() {
          */
         binding.recyclerViewNotes.layoutManager = LinearLayoutManager(this)
         adapter = NotesAdapter(notes)
+        getData()
         binding.recyclerViewNotes.adapter = adapter
         adapter.clickNodeListener =
             object : NotesAdapter.ClickNodeListener {
@@ -81,12 +85,21 @@ class MainActivity : AppCompatActivity() {
      * @param adapter.notifyDataSetChanged() - обновление RecyclerView
      */
     fun removeNote(position: Int) {
+        val note = notes[position]
+        database.notesDAO().deleteNote(note)
+        getData()
         adapter.notifyDataSetChanged()
     }
 
     fun onClickAddNote(view: View) {
         intent = Intent(this, NoteAddActivity::class.java)
         startActivity(intent)
+    }
+
+    private fun getData(){
+       val notesFromDB = database.notesDAO().getAllNotes()
+        notes.clear()
+        notes.addAll(notesFromDB)
     }
 
 }

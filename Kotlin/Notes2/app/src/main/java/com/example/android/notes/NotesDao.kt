@@ -17,7 +17,7 @@ import androidx.room.Query
 interface NotesDao {
 
     @Query("SELECT * FROM notes ORDER BY dayOfWeek")
-    fun getAllNotes(): ArrayList<Note>
+    fun getAllNotes(): List<Note>
 
     @Insert
     fun insertNote(note: Note)

@@ -30,3 +30,12 @@ BrainTrainer
 
 * FloatingActionButton
 * CardView 
+
+******************************************************
+
+ Notes2 
+* Notes 
+* ROOM ( https://developer.android.com/codelabs/android-room-with-a-view-kotlin?hl=nl_NL#0 )
+	* Create an Entity
+	* Create the DAO
+	* Room database
