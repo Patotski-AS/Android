@@ -39,3 +39,8 @@ BrainTrainer
 	* Create an Entity
 	* Create the DAO
 	* Room database
+* MainViewModel
+* MainFactory
+* Coroutine
+* ViewModelProvider
+
