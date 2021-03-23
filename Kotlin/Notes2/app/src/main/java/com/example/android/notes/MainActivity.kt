@@ -1,13 +1,12 @@
 package com.example.android.notes
 
-import android.content.ContentValues
 import android.content.Intent
-import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
-import android.provider.BaseColumns
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,7 +18,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var adapter: NotesAdapter
     private lateinit var itemTouchHelper: ItemTouchHelper
     private lateinit var notes: ArrayList<Note>
-    private lateinit var database: NotesDatabase
+    private lateinit var viewModel: MainViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,7 +28,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        database = NotesDatabase.getInstance(this)
+
+        viewModel = ViewModelProvider(this,MainFactory(this.application)).get(MainViewModel::class.java)
 
         notes = ArrayList()
 
@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
                 override fun onNodeClick(position: Int) {
                     Toast.makeText(
                         applicationContext,
-                        "ceck $position",
+                        "check $position",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -86,9 +86,7 @@ class MainActivity : AppCompatActivity() {
      */
     fun removeNote(position: Int) {
         val note = notes[position]
-        database.notesDAO().deleteNote(note)
-        getData()
-        adapter.notifyDataSetChanged()
+        viewModel.deleteNote(note)
     }
 
     fun onClickAddNote(view: View) {
@@ -96,10 +94,14 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    // При любых изменениях в database обновляется RecyclerView
     private fun getData(){
-       val notesFromDB = database.notesDAO().getAllNotes()
-        notes.clear()
-        notes.addAll(notesFromDB)
+       val notesFromDB = viewModel.getNotes()
+        notesFromDB.observe(this, Observer {
+            notes.clear()
+            notes.addAll(it)
+            adapter.notifyDataSetChanged()
+        })
     }
 
 }

@@ -32,7 +32,7 @@ public abstract class NotesDatabase : RoomDatabase() {
                     NotesDatabase::class.java,
                     DB_NAME
                 )
-                    .allowMainThreadQueries()// ТОЛЬКО для тестов, Запуск в лавном потоке
+//                    .allowMainThreadQueries()// ТОЛЬКО для тестов, Запуск в лавном потоке
                     .build()
                 database = instance
                 instance

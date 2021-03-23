@@ -1,5 +1,6 @@
 package com.example.android.notes
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -17,7 +18,7 @@ import androidx.room.Query
 interface NotesDao {
 
     @Query("SELECT * FROM notes ORDER BY dayOfWeek")
-    fun getAllNotes(): List<Note>
+    fun getAllNotes(): LiveData< List<Note>>
 
     @Insert
     fun insertNote(note: Note)
