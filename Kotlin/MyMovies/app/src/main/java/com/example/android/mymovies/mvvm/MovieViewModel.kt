@@ -27,7 +27,8 @@ class MovieViewModel : ViewModel() {
     fun fetchMovies(
         language: String = AppConstants.LANGUAGE_VALUE,
         sorted: String = AppConstants.SORT_BY_POPULARITY,
-        page: String = AppConstants.TOP_RATED.toString()
+        page: String = AppConstants.TOP_RATED.toString(),
+        set:Boolean = false
     ) {
         scope.launch {
             val popularMovies = repository.getPopularMovies(language, sorted, page)

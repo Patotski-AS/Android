@@ -1,6 +1,5 @@
 package com.example.android.mymovies.ui
 
-import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -24,8 +23,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var movieViewModel: MovieViewModel
     private lateinit var movieAdapter: MovieAdapter
     private lateinit var movies: List<Movie>
+    private var page = 1
 
-    @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -43,16 +42,22 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(applicationContext, position.toString(), Toast.LENGTH_SHORT).show()
             }
         }
-        movieAdapter.onReachEndListener = object : OnReachEndListener{
+        movieAdapter.onReachEndListener = object : OnReachEndListener {
             override fun onReachEnd() {
-                Toast.makeText(applicationContext, "Конец списка", Toast.LENGTH_SHORT).show()
+                page++
+                movieViewModel.fetchMovies(page = page.toString())
+
             }
 
         }
         movieViewModel.fetchMovies()
         binding.switchSort.isChecked = true
         movieViewModel.popularMoviesLiveData.observe(this, Observer {
-            movieAdapter.setMovies(it as ArrayList<Movie>)
+            if (page == 1)
+                movieAdapter.setMovies(it as ArrayList<Movie>)
+            else
+                movieAdapter.addMovies(it)
+
         })
 
         binding.recyclerViewPosters.layoutManager = GridLayoutManager(this, 2)
@@ -64,6 +69,7 @@ class MainActivity : AppCompatActivity() {
             } else {
                 movieViewModel.fetchMovies(sorted = AppConstants.SORT_BY_TOP_RATED)
             }
+            page = 1
         })
     }
 
