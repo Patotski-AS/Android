@@ -11,9 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyMovies" >
-        <activity android:name=".activity.FavouriteActivity" />
-        <activity android:name=".activity.DetailActivity" />
-        <activity android:name=".activity.MainActivity" >
+        <activity android:name=".ui.FavouriteActivity" />
+        <activity android:name=".ui.DetailActivity" />
+        <activity android:name=".ui.MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -1,4 +1,4 @@
-package com.example.android.mymovies.utils
+package com.example.android.mymovies.mvvm
 
 import android.util.Log
 import retrofit2.Response

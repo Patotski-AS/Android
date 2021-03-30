@@ -1,5 +1,6 @@
 package com.example.android.mymovies.api
 
+import com.example.android.mymovies.AppConstants
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -9,7 +10,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiFactory {
     private const val BASE_URL = "https://api.themoviedb.org/3/"
-    private const val API_KEY = "98ac763e9e62fcab40824523dca43375"
 
     /**
      * Creating Auth Interceptor to add api_key query in front of all the requests.
@@ -18,7 +18,7 @@ object ApiFactory {
     private val authInterceptor = Interceptor { chain ->
         val newUrl = chain.request().url()
             .newBuilder()
-            .addQueryParameter("api_key", API_KEY)
+            .addQueryParameter("api_key", AppConstants.API_KEY)
             .build()
 
         val newRequest = chain.request()
