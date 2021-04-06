@@ -1,13 +1,19 @@
 package com.example.android.mymovies.pogo
 
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import com.example.android.mymovies.AppConstants
+
+@Entity(tableName = AppConstants.DB_NAME)
 data class Movie(
-    var id: Int,
-    var vote_count: Int,
-    var title: String,
-    var original_title: String,
-    var overview: String,
-    var poster_path: String,
-    var backdrop_path: String,
-    var vote_average: Double,
-    var release_date: String
+    @PrimaryKey var id: Int,
+    @ColumnInfo(name = "vote_count") var voteCount: Int,
+    @ColumnInfo(name = "title") var title: String,
+    @ColumnInfo(name = "original_title") var originalTitle: String,
+    @ColumnInfo(name = "overview") var overview: String,
+    @ColumnInfo(name = "poster_path") var posterPath: String,
+    @ColumnInfo(name = "backdrop_path") var backdropPath: String,
+    @ColumnInfo(name = "vote_average") var voteAverage: Double,
+    @ColumnInfo(name = "release_date") var releaseDate: String
 )

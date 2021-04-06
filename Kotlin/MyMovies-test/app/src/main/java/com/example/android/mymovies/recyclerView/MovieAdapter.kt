@@ -5,21 +5,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.android.mymovies.AppConstants
 import com.example.android.mymovies.R
 import com.example.android.mymovies.pogo.Movie
 import com.squareup.picasso.Picasso
 
 class MovieAdapter(
-    private var movies: ArrayList<Movie>
+    private var movies: ArrayList<Movie>,
 ) : RecyclerView.Adapter<MovieAdapter.MoviesViewHolder>() {
     var onPosterClickListener: OnPosterClickListener? = null
     var onReachEndListener: OnReachEndListener? = null
-
-    companion object {
-        private const val BASE_POSTER_URL = "https://image.tmdb.org/t/p/"
-        private const val SMALL_POSTER_SIZE = "w185"
-        private const val BIG_POSTER_SIZE = "w780"
-    }
 
 
     inner class MoviesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -46,7 +41,10 @@ class MovieAdapter(
         }
 
         val movie = movies[position]
-        Picasso.get().load("$BASE_POSTER_URL$SMALL_POSTER_SIZE${movie.poster_path}")
+        Picasso.get()
+            .load(AppConstants.BASE_POSTER_URL +
+                    AppConstants.SMALL_POSTER_SIZE +
+                    movie.posterPath)
             .into(holder.imageViewSmallPoster)
     }
 

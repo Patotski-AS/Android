@@ -9,7 +9,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 
 object ApiFactory {
-    private const val BASE_URL = "https://api.themoviedb.org/3/"
 
     /**
      * Creating Auth Interceptor to add api_key query in front of all the requests.
@@ -39,11 +38,14 @@ object ApiFactory {
 
     fun retrofit(): Retrofit = Retrofit.Builder()
         .client(tmdbClient)
-        .baseUrl(BASE_URL)
+        .baseUrl(AppConstants.BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
         .addCallAdapterFactory(CoroutineCallAdapterFactory())
         .build()
 
-    val apiService: ApiService = retrofit().create(ApiService::class.java)
-
+    object MovieApi {
+        val apiService: ApiService by lazy {
+            retrofit().create(ApiService::class.java)
+        }
+    }
 }
