@@ -20,7 +20,10 @@ class TitleFragment : Fragment() {
         binding.playButton.setOnClickListener{ view : View ->
             view.findNavController().navigate(R.id.action_titleFragment_to_gameFragment)
         }
-
+        /**
+         * этот фрагмент хотел бы участвовать в заполнении меню параметров,
+         * получая вызов onCreateOptionsMenu(Menu, MenuInflater) и связанные методы.
+         */
         setHasOptionsMenu(true)
         return binding.root
     }
