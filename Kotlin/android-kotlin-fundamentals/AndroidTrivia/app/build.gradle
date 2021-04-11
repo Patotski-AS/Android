@@ -20,6 +20,9 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-kapt'
 
+// Adding the apply plugin statement for safeargs
+apply plugin: 'androidx.navigation.safeargs'
+
 android {
     compileSdkVersion 30
     defaultConfig {
