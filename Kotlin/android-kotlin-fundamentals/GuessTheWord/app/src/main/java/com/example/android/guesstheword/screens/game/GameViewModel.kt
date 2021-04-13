@@ -1,6 +1,7 @@
 package com.example.android.guesstheword.screens.game
 
 import android.util.Log
+import androidx.core.graphics.alpha
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
@@ -84,7 +85,7 @@ class GameViewModel : ViewModel() {
     }
 
      fun onCorrect() {
-        score.value = (score.value)?.minus(1)
+        score.value = (score.value)?.plus(1)
         nextWord()
     }
 
