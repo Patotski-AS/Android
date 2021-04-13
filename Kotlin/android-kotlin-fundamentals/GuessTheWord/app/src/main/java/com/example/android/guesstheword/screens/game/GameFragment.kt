@@ -28,7 +28,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import com.example.android.guesstheword.R
 import com.example.android.guesstheword.databinding.GameFragmentBinding
-import com.example.android.guesstheword.screens.GameViewModel
 
 /**
  * Fragment where the game is played
@@ -36,7 +35,6 @@ import com.example.android.guesstheword.screens.GameViewModel
 class GameFragment : Fragment() {
 
     private lateinit var viewModel: GameViewModel
-
 
     private lateinit var binding: GameFragmentBinding
 
