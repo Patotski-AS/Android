@@ -105,4 +105,9 @@ fun onCorrect() {
     _eventGameFinish.value = true
 }
 
+    /** Method for the game completed event (метод сброса события завершения игры) **/
+    fun onGameFinishComplete() {
+        _eventGameFinish.value = false
+    }
+
 }
