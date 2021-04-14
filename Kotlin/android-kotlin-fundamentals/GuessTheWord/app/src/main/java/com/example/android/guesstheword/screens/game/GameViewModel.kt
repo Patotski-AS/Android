@@ -89,21 +89,21 @@ class GameViewModel : ViewModel() {
             _word.value = wordList.removeAt(0)
     }
 
-/** Methods for buttons presses **/
-fun onSkip() {
-    _score.value = (score.value)?.minus(1)
-    nextWord()
-}
+    /** Methods for buttons presses **/
+    fun onSkip() {
+        _score.value = (score.value)?.minus(1)
+        nextWord()
+    }
 
-fun onCorrect() {
-    _score.value = (score.value)?.plus(1)
-    nextWord()
-}
+    fun onCorrect() {
+        _score.value = (score.value)?.plus(1)
+        nextWord()
+    }
 
-/** Method for the game completed event (Метод для события завершения игры) **/
- fun onGameFinish() {
-    _eventGameFinish.value = true
-}
+    /** Method for the game completed event (Метод для события завершения игры) **/
+    fun onGameFinish() {
+        _eventGameFinish.value = true
+    }
 
     /** Method for the game completed event (метод сброса события завершения игры) **/
     fun onGameFinishComplete() {
