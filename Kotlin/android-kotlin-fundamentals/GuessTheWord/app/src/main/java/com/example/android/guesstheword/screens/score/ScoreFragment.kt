@@ -24,6 +24,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.android.guesstheword.R
 import com.example.android.guesstheword.databinding.ScoreFragmentBinding
 
@@ -61,6 +62,18 @@ class ScoreFragment : Fragment() {
         })
 
         binding.scoreText.text = viewModel.score.toString()
+
+        /** Navigates back to game when button is pressed(Возврат к игре при нажатии кнопки)
+         * возврат на экран игры и выполнеие сброса eventPlayAgain.
+         */
+        viewModel.eventPlayAgain.observe(viewLifecycleOwner, Observer { playAgain ->
+            if (playAgain) {
+                findNavController().navigate(ScoreFragmentDirections.actionRestart())
+                viewModel.onPlayAgainComplete()
+            }
+        })
+
+        binding.playAgainButton.setOnClickListener{viewModel.onPlayAgain()}
 
         return binding.root
     }
