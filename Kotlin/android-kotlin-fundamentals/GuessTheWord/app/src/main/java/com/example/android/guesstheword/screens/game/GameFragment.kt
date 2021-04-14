@@ -70,6 +70,12 @@ class GameFragment : Fragment() {
         binding.endGameButton.setOnClickListener { onEndGame() }
 
         /**
+         * Установили модель просмотра для привязки данных - это обеспечивает доступ к привязанному макету
+        // ко всем данным в ViewModel
+         */
+        binding.gameViewModel = viewModel
+
+        /**
          * Setting up LiveData observation relationship
          * Наблюдатель получает событие, когда данные, хранящиеся в наблюдаемом LiveData объекте, изменяются.
          */
@@ -87,11 +93,11 @@ class GameFragment : Fragment() {
         /**
          * Observer for the Game finished event(Наблюдатель за событием завершения игры)
          */
-        viewModel.eventGameFinish.observe(viewLifecycleOwner,Observer<Boolean>{
-            hasFinished ->
+        viewModel.eventGameFinish.observe(viewLifecycleOwner, Observer<Boolean> { hasFinished ->
             if (hasFinished)
                 gameFinished()
         })
+
 
         return binding.root
 
