@@ -71,13 +71,6 @@ class GameFragment : Fragment() {
          */
         binding.lifecycleOwner = viewLifecycleOwner
 
-        /**
-         * Setting up LiveData observation relationship
-         * Наблюдатель получает событие, когда данные, хранящиеся в наблюдаемом LiveData объекте, изменяются.
-         */
-        viewModel.score.observe(viewLifecycleOwner, Observer { newScore ->
-            binding.scoreText.text = newScore.toString()
-        })
 
         /**
          *  Observer for the Game finished event(Наблюдатель за событием завершения игры)
