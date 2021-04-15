@@ -36,12 +36,10 @@ import com.example.android.guesstheword.databinding.GameFragmentBinding
 class GameFragment : Fragment() {
 
     private lateinit var viewModel: GameViewModel
-
     private lateinit var binding: GameFragmentBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-
         // Inflate view and obtain an instance of the binding class
         binding = DataBindingUtil.inflate(
                 inflater,
@@ -61,15 +59,17 @@ class GameFragment : Fragment() {
          */
         viewModel = ViewModelProvider(this).get(GameViewModel::class.java)
 
-//        binding.correctButton.setOnClickListener { onCorrect() }
-//        binding.skipButton.setOnClickListener { onSkip() }
-//        binding.endGameButton.setOnClickListener { onEndGame() }
-
         /**
          * Установили модель просмотра для привязки данных - это обеспечивает доступ к
          * привязанному макету ко всем данным в ViewModel
          */
         binding.gameViewModel = viewModel
+
+        /**
+         * Укажите представление фрагмента как владельца жизненного цикла привязки.
+         * Это используется для того, чтобы привязка могла наблюдать обновления LiveData
+         */
+        binding.lifecycleOwner = viewLifecycleOwner
 
         /**
          * Setting up LiveData observation relationship
@@ -80,20 +80,12 @@ class GameFragment : Fragment() {
         })
 
         /**
-         *  Setting up LiveData observation relationship
-         */
-        viewModel.word.observe(viewLifecycleOwner, Observer { newWord ->
-            binding.wordText.text = newWord
-        })
-
-        /**
          *  Observer for the Game finished event(Наблюдатель за событием завершения игры)
          */
         viewModel.eventGameFinish.observe(viewLifecycleOwner, Observer<Boolean> { hasFinished ->
             if (hasFinished)
                 gameFinished()
         })
-
 
         return binding.root
     }
@@ -107,19 +99,5 @@ class GameFragment : Fragment() {
         action.score = viewModel.score.value ?: 0
         NavHostFragment.findNavController(this).navigate(action)
         viewModel.onGameFinishComplete()
-
     }
-
-//    private fun onEndGame() {
-//        gameFinished()
-//    }
-//
-//    /** Methods for buttons presses **/
-//    private fun onSkip() {
-//        viewModel.onSkip()
-//    }
-//
-//    private fun onCorrect() {
-//        viewModel.onCorrect()
-//    }
 }
