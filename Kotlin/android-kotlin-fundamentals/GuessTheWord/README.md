@@ -2,7 +2,7 @@ ViewModel and ViewModelFactory - Starter Code
 ==================================
 
 https://developer.android.com/codelabs/kotlin-android-training-live-data?authuser=1#0
-
+https://developer.android.com/codelabs/kotlin-android-training-live-data-data-binding?authuser=1#6
 
 
 Use as starter code for the ViewModel codelab.
