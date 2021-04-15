@@ -57,21 +57,17 @@ class GameFragment : Fragment() {
          * создает ViewModel экземпляр в связи с заданной областью действия (действие или фрагмент).
          * Созданное ViewModel сохраняется, пока существует область видимости. Например, если область видимости является фрагментом,
          * объект ViewModel сохраняется до тех пор, пока фрагмент не будет отсоединен.
-         *
          * @param get() метод для создания ViewModelProvider
          */
         viewModel = ViewModelProvider(this).get(GameViewModel::class.java)
 
-        binding.correctButton.setOnClickListener { onCorrect() }
-        binding.skipButton.setOnClickListener { onSkip() }
-//        updateScoreText()
-//        updateWordText()
-
-        binding.endGameButton.setOnClickListener { onEndGame() }
+//        binding.correctButton.setOnClickListener { onCorrect() }
+//        binding.skipButton.setOnClickListener { onSkip() }
+//        binding.endGameButton.setOnClickListener { onEndGame() }
 
         /**
-         * Установили модель просмотра для привязки данных - это обеспечивает доступ к привязанному макету
-        // ко всем данным в ViewModel
+         * Установили модель просмотра для привязки данных - это обеспечивает доступ к
+         * привязанному макету ко всем данным в ViewModel
          */
         binding.gameViewModel = viewModel
 
@@ -91,7 +87,7 @@ class GameFragment : Fragment() {
         })
 
         /**
-         * Observer for the Game finished event(Наблюдатель за событием завершения игры)
+         *  Observer for the Game finished event(Наблюдатель за событием завершения игры)
          */
         viewModel.eventGameFinish.observe(viewLifecycleOwner, Observer<Boolean> { hasFinished ->
             if (hasFinished)
@@ -100,7 +96,6 @@ class GameFragment : Fragment() {
 
 
         return binding.root
-
     }
 
     /**
@@ -115,29 +110,16 @@ class GameFragment : Fragment() {
 
     }
 
-    private fun onEndGame() {
-        gameFinished()
-    }
-
-    /** Methods for buttons presses **/
-    private fun onSkip() {
-        viewModel.onSkip()
-//        updateWordText()
-//        updateScoreText()
-    }
-
-    private fun onCorrect() {
-        viewModel.onCorrect()
-//        updateScoreText()
-//        updateWordText()
-    }
-
-//    /** Methods for updating the UI **/
-//    private fun updateWordText() {
-//        binding.wordText.text = viewModel.word.value
+//    private fun onEndGame() {
+//        gameFinished()
 //    }
 //
-//    private fun updateScoreText() {
-//        binding.scoreText.text = viewModel.score.value.toString()
+//    /** Methods for buttons presses **/
+//    private fun onSkip() {
+//        viewModel.onSkip()
+//    }
+//
+//    private fun onCorrect() {
+//        viewModel.onCorrect()
 //    }
 }
