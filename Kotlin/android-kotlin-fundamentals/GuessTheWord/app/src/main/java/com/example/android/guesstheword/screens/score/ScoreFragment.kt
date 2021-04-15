@@ -63,6 +63,8 @@ class ScoreFragment : Fragment() {
 
         binding.scoreText.text = viewModel.score.toString()
 
+        binding.scoreViewModel = viewModel
+
         /** Navigates back to game when button is pressed(Возврат к игре при нажатии кнопки)
          * возврат на экран игры и выполнеие сброса eventPlayAgain.
          */
@@ -73,7 +75,7 @@ class ScoreFragment : Fragment() {
             }
         })
 
-        binding.playAgainButton.setOnClickListener{viewModel.onPlayAgain()}
+//        binding.playAgainButton.setOnClickListener{viewModel.onPlayAgain()}
 
         return binding.root
     }
