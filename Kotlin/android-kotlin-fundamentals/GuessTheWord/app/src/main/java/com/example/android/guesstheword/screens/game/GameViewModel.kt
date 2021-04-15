@@ -59,8 +59,15 @@ class GameViewModel : ViewModel() {
      *
      * @param  DateUtils.formatElapsedTime() служебного метода, который занимает long несколько секунд и форматирует ее в " MM:SS" строковый формат.
      */
-    val currentTimeString = Transformations.map(currentTime) { time -> DateUtils.formatElapsedTime(time) }
+    val currentTimeString: LiveData<String> = Transformations.map(currentTime) { time -> DateUtils.formatElapsedTime(time) }
 
+    // Подсказка для текущего слова
+    val wordHint: LiveData<String> = Transformations.map(word) { word ->
+        val randomPosition = (1..word.length).random()
+        "Current word has " + word.length + " letters" +
+                "\nThe letter at position " + randomPosition + " is " +
+                word[randomPosition - 1].toUpperCase()
+    }
 
     /**
      * Вызывается при создании класса
