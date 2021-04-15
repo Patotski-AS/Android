@@ -16,3 +16,24 @@
 
 package com.example.android.trackmysleepquality.database
 
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+/**
+ * По умолчанию (без аргументов @Entity) имя таблицы будет таким же, как и у класса
+ */
+@Entity(tableName = "daily_sleep_quality_table")
+data class SleepNight(
+        @PrimaryKey(autoGenerate = true)
+        var nightId: Long = 0L, //идентификатор
+
+        @ColumnInfo(name = "start_time_milli")
+        val startTimeMilli: Long = System.currentTimeMillis(), //время начала сна
+
+        @ColumnInfo(name = "end_time_milli")
+        var endTimeMilli: Long = startTimeMilli, //время окончания сна
+
+        @ColumnInfo(name = "quality_rating")
+        var sleepQuality: Int = -1 // числовой оценки качества сна
+)
