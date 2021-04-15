@@ -1,10 +1,12 @@
 package com.example.android.guesstheword.screens.game
 
 import android.os.CountDownTimer
+import android.text.format.DateUtils
 import android.util.Log
 import androidx.core.graphics.alpha
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 
 class GameViewModel : ViewModel() {
@@ -45,6 +47,20 @@ class GameViewModel : ViewModel() {
 
     // The list of words - the front of the list is the next word to guess
     private lateinit var wordList: MutableList<String>
+
+    /**
+     *Версия String текущего времени
+     *
+     * @param Transformations.map() Способ обеспечивает способ выполнить обработку данных на источнике LiveData
+     * и возвращает результат LiveDataобъект. Эти преобразования не вычисляются,
+     * если наблюдатель не наблюдает за возвращаемым LiveDataобъектом.
+     * Этот метод принимает в LiveData качестве параметров источник и функцию. Функция манипулирует источником LiveData.
+     * Примечание . Переданная лямбда-функция Transformation.map()выполняется в основном потоке, поэтому не включайте длительные задачи.
+     *
+     * @param  DateUtils.formatElapsedTime() служебного метода, который занимает long несколько секунд и форматирует ее в " MM:SS" строковый формат.
+     */
+    val currentTimeString = Transformations.map(currentTime) { time -> DateUtils.formatElapsedTime(time) }
+
 
     /**
      * Вызывается при создании класса
