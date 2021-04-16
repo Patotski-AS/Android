@@ -22,30 +22,38 @@ import androidx.room.Insert
 import androidx.room.Query
 
 /**
+ *  @suspend- это способ Kotlin пометить функцию или тип функции как доступную для сопрограмм.
+ * Когда сопрограмма вызывает функцию, отмеченную значком suspend,
+ * вместо блокировки до тех пор, пока функция не вернется, как при обычном вызове функции,
+ * сопрограмма приостанавливает выполнение до тех пор, пока не будет готов результат.
+ * Затем сопрограмма возобновляет работу с того места, где она остановилась, с результатом.
+ */
+
+/**
  * объект доступа к данным (DAO)
  */
 @Dao
-interface SleepDatabaseDao{
+interface SleepDatabaseDao {
 
     /**
      * Room выполняет SQL-запрос для вставки объекта в базу данных
      */
     @Insert
-    fun insert(night: SleepNight)
+    suspend fun insert(night: SleepNight)
 
     /**
      * Выберите все столбцы из daily_sleep_quality_table, где EnightId соответствует: key аргумент.
      * Для ссылки на аргументы функции в запросе используется двоеточие
      */
     @Query("SELECT * from daily_sleep_quality_table WHERE nightId = :key")
-    fun get(key: Long): SleepNight?
+    suspend fun get(key: Long): SleepNight?
 
     /**
      * Аннотация удаляет один элемент
      * Недостатком является то, что вам нужно получить или узнать, что находится в таблице
      */
     @Query("DELETE FROM daily_sleep_quality_table")
-    fun clear()
+    suspend fun clear()
 
     /**
      * SleepNight возвращаемое getTonight()функцией nullable,
@@ -53,10 +61,12 @@ interface SleepDatabaseDao{
      * (Таблица пуста в начале и после очистки данных.)
      */
     @Query("SELECT * FROM daily_sleep_quality_table ORDER BY nightId DESC LIMIT 1")
-    fun getTonight(): SleepNight?
+    suspend fun getTonight(): SleepNight?
 
     /**
      * возвращает все столбцы из daily_sleep_quality_table, упорядоченные в порядке убывания.
+     * suspend не применяем , т.к. Room уже использует фоновый поток для этого
+     * конкретного @Query, который возвращает LiveData.
      *
      */
     @Query("SELECT * FROM daily_sleep_quality_table ORDER BY nightId DESC")
