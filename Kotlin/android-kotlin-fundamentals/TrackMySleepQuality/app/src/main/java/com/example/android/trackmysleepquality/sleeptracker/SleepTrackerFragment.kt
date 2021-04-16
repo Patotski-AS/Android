@@ -22,7 +22,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.android.trackmysleepquality.R
+import com.example.android.trackmysleepquality.database.SleepDatabase
 import com.example.android.trackmysleepquality.databinding.FragmentSleepTrackerBinding
 
 /**
@@ -43,6 +45,36 @@ class SleepTrackerFragment : Fragment() {
         // Get a reference to the binding object and inflate the fragment views.
         val binding: FragmentSleepTrackerBinding = DataBindingUtil.inflate(
                 inflater, R.layout.fragment_sleep_tracker, container, false)
+
+        /**
+         * получить ссылку на контекст приложения.
+         * ссылка на приложение, к которому прикреплен этот фрагмент,
+         * чтобы передать его поставщику фабрики модели представления.
+         * Функция requireNotNullKotlin выдает, IllegalArgumentException если значение равно null.
+         */
+        val application = requireNotNull(this.activity).application
+
+        /**
+         * ссылка на источник данных через ссылку на DAO.
+         */
+        val dataSource = SleepDatabase.getInstance(application).sleepDatabaseDao
+        val viewModelFactory = SleepTrackerViewModelFactory(dataSource, application)
+
+        /**
+         * Получите ссылку на ViewModel, связанную с этим фрагментом.
+         */
+        val sleepTrackerViewModel = ViewModelProvider(this, viewModelFactory)
+                .get(SleepTrackerViewModel::class.java)
+
+        /**
+         * Установите текущее действие как владельца жизненного цикла привязки.
+         */
+        binding.lifecycleOwner = this
+
+        /**
+         * Назначьте sleepTrackerViewModelпеременную привязки для sleepTrackerViewModel
+         */
+        binding.sleepTrackerViewModel = sleepTrackerViewModel
 
         return binding.root
     }
