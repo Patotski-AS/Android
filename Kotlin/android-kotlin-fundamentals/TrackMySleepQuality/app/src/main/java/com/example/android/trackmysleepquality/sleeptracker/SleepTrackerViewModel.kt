@@ -18,7 +18,11 @@ package com.example.android.trackmysleepquality.sleeptracker
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.example.android.trackmysleepquality.database.SleepDatabaseDao
+import com.example.android.trackmysleepquality.database.SleepNight
+import kotlinx.coroutines.launch
 
 /**
  * ViewModel for SleepTrackerFragment.
@@ -28,5 +32,43 @@ import com.example.android.trackmysleepquality.database.SleepDatabaseDao
 class SleepTrackerViewModel(
         val database: SleepDatabaseDao,
         application: Application) : AndroidViewModel(application) {
+    /**
+     * Определите переменную, вызываемую tonight для хранения текущей ночи.
+     * Сделайте переменную MutableLiveData, потому что вам нужно иметь
+     * возможность наблюдать за данными и изменять их.
+     */
+    private var tonight = MutableLiveData<SleepNight?>()
+
+    init {
+        initializeTonight()
+    }
+
+    /**
+     * viewModelScope.launch - запуск сопрораммы
+     * Внутри фигурных скобок получите значение для tonight
+     * из базы данных путем вызова getTonightFromDatabase() и присвойте значение tonight.value.
+     * Фигурные скобки для launch. Они определяют лямбда-выражение,
+     * которое представляет собой функцию без имени. В этом примере вы передаете лямбду launch
+     * конструктору сопрограмм. Этот конструктор создает сопрограмму и назначает
+     * выполнение этой лямбды соответствующему диспетчеру.
+     */
+    private fun initializeTonight() {
+        viewModelScope.launch {
+            tonight.value = getTonightFromDatabase()
+        }
+    }
+
+    /**
+     * Внутри тела функции getTonightFromDatabase() получить tonight (последнюю ночь) из базы данных.
+     * Если время начала и окончания не совпадают, что означает, что ночь уже завершилась,
+     * вернитесь null. В противном случае верните ночь.
+     */
+    private suspend fun getTonightFromDatabase(): SleepNight? {
+        var night = database.getTonight()
+        if (night?.endTimeMilli != night?.startTimeMilli) {
+            night = null
+        }
+        return night
+    }
 }
 
