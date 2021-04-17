@@ -70,5 +70,25 @@ class SleepTrackerViewModel(
         }
         return night
     }
+
+    /**
+     * обработчик щелчка для кнопки « Пуск»
+     * Вам нужно создать новый SleepNight, вставить его в базу данных и присвоить ему tonight
+     *
+     */
+    fun onStartTracking() {
+        viewModelScope.launch {
+            val newNight = SleepNight()
+            tonight.value = getTonightFromDatabase()
+        }
+    }
+
+    /**
+     * вставка в DB
+     */
+    private suspend fun insert(night: SleepNight) {
+        database.insert(night)
+    }
+
 }
 

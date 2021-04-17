@@ -56,7 +56,7 @@ interface SleepDatabaseDao {
     suspend fun clear()
 
     /**
-     * SleepNight возвращаемое getTonight()функцией nullable,
+     * SleepNight возвращаемое getTonight() функцией nullable,
      * чтобы функция могла обрабатывать случай, когда таблица пуста.
      * (Таблица пуста в начале и после очистки данных.)
      */
