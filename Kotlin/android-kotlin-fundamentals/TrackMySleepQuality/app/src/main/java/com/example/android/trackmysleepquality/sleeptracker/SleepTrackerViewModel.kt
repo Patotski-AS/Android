@@ -19,9 +19,11 @@ package com.example.android.trackmysleepquality.sleeptracker
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import com.example.android.trackmysleepquality.database.SleepDatabaseDao
 import com.example.android.trackmysleepquality.database.SleepNight
+import com.example.android.trackmysleepquality.formatNights
 import kotlinx.coroutines.launch
 
 /**
@@ -38,6 +40,22 @@ class SleepTrackerViewModel(
      * возможность наблюдать за данными и изменять их.
      */
     private var tonight = MutableLiveData<SleepNight?>()
+
+    /**
+     * Получите все ночи из базы данных и присвойте их nights переменной.
+     */
+    private val nights = database.getAllNights()
+
+    /**
+     * код для преобразования nights в nightsString
+     * Переводим nights в map()функцию из Transformations класса.
+     * Чтобы получить доступ к вашим строковым ресурсам, определите функцию сопоставления
+     * как вызывающую formatNights(). добавлем nights и Resources объекты.
+     *
+     */
+    val nightsString = Transformations.map(nights) { nights ->
+        formatNights(nights, application.resources)
+    }
 
     init {
         initializeTonight()
@@ -79,6 +97,7 @@ class SleepTrackerViewModel(
     fun onStartTracking() {
         viewModelScope.launch {
             val newNight = SleepNight()
+            insert(newNight)
             tonight.value = getTonightFromDatabase()
         }
     }
