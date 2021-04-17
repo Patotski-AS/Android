@@ -20,6 +20,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 
 /**
  *  @suspend- это способ Kotlin пометить функцию или тип функции как доступную для сопрограмм.
@@ -40,6 +41,9 @@ interface SleepDatabaseDao {
      */
     @Insert
     suspend fun insert(night: SleepNight)
+
+    @Update
+    suspend fun update(night: SleepNight)
 
     /**
      * Выберите все столбцы из daily_sleep_quality_table, где EnightId соответствует: key аргумент.

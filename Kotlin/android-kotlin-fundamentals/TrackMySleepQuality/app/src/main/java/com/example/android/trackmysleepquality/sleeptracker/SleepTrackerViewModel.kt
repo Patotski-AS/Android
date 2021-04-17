@@ -109,5 +109,23 @@ class SleepTrackerViewModel(
         database.insert(night)
     }
 
+    /**
+     * Если время окончания еще не установлено,
+     * установите endTimeMilli текущее системное время и позвоните update() с ночными данными.
+     * В Kotlin return@labelсинтаксис определяет функцию, из которой этот оператор возвращает,
+     * среди нескольких вложенных функций.
+     */
+    fun onStopTracking() {
+        viewModelScope.launch {
+            val oldNight = tonight.value ?: return@launch
+            oldNight.endTimeMilli = System.currentTimeMillis()
+            update(oldNight)
+        }
+    }
+
+    private suspend fun update(night: SleepNight) {
+        database.update(night)
+    }
+
 }
 
