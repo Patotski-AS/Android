@@ -6,31 +6,20 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.trackmysleepquality.R
 import com.example.android.trackmysleepquality.convertDurationToFormatted
 import com.example.android.trackmysleepquality.convertNumericQualityToString
 import com.example.android.trackmysleepquality.database.SleepNight
 
-class SleepNightAdapter : RecyclerView.Adapter<SleepNightAdapter.ViewHolder>() {
+/**
+ * import: androidx.recyclerview.widget.ListAdapter
+ */
+class SleepNightAdapter : ListAdapter<SleepNight, SleepNightAdapter.ViewHolder>(SleepNightDiffCallback()) {
 
-    /**
-     * Чтобы сообщить, RecyclerView когда данные, которые он отображает, были изменены,
-     * добавьте настраиваемый установщик к data переменной, которая находится в верхней
-     * части SleepNightAdapter класса. В установщике задайте data новое значение,
-     * затем вызовите, notifyDataSetChanged() чтобы запустить перерисовку списка с новыми данными.
-     */
-    var data = listOf<SleepNight>()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
 
-    /**
-     * переопределить, getItemCount()чтобы вернуть размер списка ночей сна data. Он RecyclerView
-     * должен знать, сколько элементов у адаптера для отображения, и он делает это путем вызова getItemCount()
-     */
-    override fun getItemCount() = data.size
+
 
     /**
      * onBindViewHolder() Функция вызывается RecyclerView для отображения данных
@@ -38,7 +27,7 @@ class SleepNightAdapter : RecyclerView.Adapter<SleepNightAdapter.ViewHolder>() {
      * два аргумента: держатель представления и позицию данных для привязки.
      */
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = data[position]
+        val item = getItem(position)
         holder.bind(item)
     }
 
