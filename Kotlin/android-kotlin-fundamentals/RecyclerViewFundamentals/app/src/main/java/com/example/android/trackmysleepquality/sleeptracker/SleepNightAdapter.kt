@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.trackmysleepquality.R
 import com.example.android.trackmysleepquality.convertDurationToFormatted
@@ -78,4 +79,29 @@ class SleepNightAdapter : RecyclerView.Adapter<SleepNightAdapter.ViewHolder>() {
             }
         }
     }
+}
+
+class SleepNightDiffCallback: DiffUtil.ItemCallback<SleepNight>() {
+
+    /**
+     * проверяет, являются ли два переданных SleepNight элемента, oldItem и newItem, одинаковыми.
+     * Если у предметов одинаковые nightId, это один и тот же предмет, поэтому верните их true.
+     * В противном случае верните false. DiffUtil использует этот тест,
+     * чтобы определить, был ли элемент добавлен, удален или перемещен.
+     */
+    override fun areItemsTheSame(oldItem: SleepNight, newItem: SleepNight): Boolean {
+        return oldItem.nightId == newItem.nightId
+    }
+
+    /**
+     * проверьте, содержатся ли oldItem и newItem совпадают ли данные;
+     * то есть равны ли они. Эта проверка на равенство проверяет все поля,
+     * потому что SleepNight это класс данных. Data классы автоматически определяют equals
+     * и несколько других методов для вас. Если есть различия между oldItem
+     * и newItem, этот код сообщает, DiffUtil что элемент был обновлен.
+     */
+    override fun areContentsTheSame(oldItem: SleepNight, newItem: SleepNight): Boolean {
+        return oldItem == newItem
+    }
+
 }
