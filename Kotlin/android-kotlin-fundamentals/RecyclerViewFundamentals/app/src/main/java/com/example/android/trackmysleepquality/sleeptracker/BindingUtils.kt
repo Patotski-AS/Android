@@ -21,7 +21,7 @@ fun TextView.setSleepDurationFormatted(item: SleepNight) {
 
 
 /**
- * адаптер устанавливает качество сна на основе значения в SleepNight объекте
+ * адаптер устанавливает качество сна на основе значения в SleepNightобъекте
  */
 @BindingAdapter("sleepQualityString")
 fun TextView.setSleepQualityString(item: SleepNight) {
