@@ -7,6 +7,9 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import com.example.android.firstkonlin.databinding.ActivityMainBinding
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class MainActivity : AppCompatActivity() {
 private lateinit var binding:ActivityMainBinding
@@ -14,7 +17,6 @@ private lateinit var binding:ActivityMainBinding
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
         /**
          * Вызовите статический inflate()метод, включенный в сгенерированный класс привязки.

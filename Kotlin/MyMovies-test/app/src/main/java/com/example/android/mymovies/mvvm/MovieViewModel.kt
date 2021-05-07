@@ -19,7 +19,7 @@ class MovieViewModel : ViewModel() {
 
     private val scope = CoroutineScope(coroutineContext)
 
-    private val repository: MovieRepository = MovieRepository(ApiFactory.apiService)
+    private val repository: MovieRepository = MovieRepository(ApiFactory.MovieApi.apiService)
 
 
     val popularMoviesLiveData = MutableLiveData<MutableList<Movie>?>()
@@ -28,12 +28,16 @@ class MovieViewModel : ViewModel() {
         language: String = AppConstants.LANGUAGE_VALUE,
         sorted: String = AppConstants.SORT_BY_POPULARITY,
         page: String = AppConstants.TOP_RATED.toString(),
-        set:Boolean = false
+        set: Boolean = false,
     ) {
         scope.launch {
-            val popularMovies = repository.getPopularMovies(language, sorted, page)
-            popularMoviesLiveData.postValue(popularMovies)
+            getPopularMovies(language, sorted, page)
         }
+    }
+
+    private suspend fun getPopularMovies(language: String, sorted: String, page: String) {
+        val popularMovies = repository.getPopularMovies(language, sorted, page)
+        popularMoviesLiveData.postValue(popularMovies)
     }
 
 
