@@ -74,6 +74,15 @@
         ...
     </layout>
     ```
+* Cвязываем данные:
+  *  Выше onCreate()создайте частную переменную
+        ```kotlin
+         private val myName: MyName = MyName("Aleks Haecky")
+     ```
+  * В onCreate()установите значение myNameпеременной в файле макета равным значению myNameпеременной, которую вы только что объявили. Вы не можете напрямую получить доступ к переменной в XML. Вам нужно получить к нему доступ через объект привязки.
+     ```kotlin
+    binding.myName = myName
+     ```
 * Переменные макета используются для написания выражений макета
     ```xml
     android:text="@{myName.name}"
@@ -90,8 +99,8 @@
 
     fun addPicture() {
         _text.value = _text.value?.inc()
-    }
-}
+     }
+  }
     ```
 * установливаем владельца жизненного цикла в binding объекте (lifecycleOwner):
     ```kotlin
