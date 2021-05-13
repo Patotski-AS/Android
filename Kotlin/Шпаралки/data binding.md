@@ -159,6 +159,9 @@
                 android:max="@{100}"
     ...  
     ```
-
+  # Ссылки
+  * [Основы привязки данных](https://developer.android.com/codelabs/kotlin-android-training-data-binding-basics/index.html?authuser=1#0)
+  *  [Привязка данных в Android](https://developer.android.com/codelabs/android-databinding?authuser=1#0)
+  *  [Библиотека привязки данных](https://developer.android.com/topic/libraries/data-binding/?authuser=1)
 
 
