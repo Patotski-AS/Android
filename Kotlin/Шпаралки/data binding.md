@@ -159,6 +159,33 @@
                 android:max="@{100}"
     ...  
     ```
+5. **Создать объект привязки в Fragments:**
+  * В onCreateView()методе фраменты создайте binding переменную ( val binding).
+  * Чтобы расширить представление фрагмента, вызовите DataBindingUtil.inflate()метод Binding объекта фрагмента.
+  * Передайте в DataBindingUtil.inflate метод четыре аргумента :
+    * inflater, который LayoutInflater используется для расширения макета привязки.
+    * Ресурс макета XML для раздуваемого макета. Используйте один из уже определенных макетов R.layout.fragment_title.
+    * container для родителя ViewGroup. (Этот   параметр не является обязательным.)
+    * false по attachToParent стоимости.
+ * Назначьте привязку, которая DataBindingUtil.inflate возвращается к binding переменной.
+ * Возврат binding.root из метода, который содержит завышенное представление.
+    ```kotlin
+   class FindFragment : Fragment() {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
+        val binding = DataBindingUtil
+            .inflate<FragmentFindBinding>(
+                inflater
+                ,R.layout.fragment_find
+                ,container
+                ,false)
+        return binding.root
+      }
+    }  
+    ```
+
+
+
   # Ссылки
   * [Основы привязки данных](https://developer.android.com/codelabs/kotlin-android-training-data-binding-basics/index.html?authuser=1#0)
   *  [Привязка данных в Android](https://developer.android.com/codelabs/android-databinding?authuser=1#0)
